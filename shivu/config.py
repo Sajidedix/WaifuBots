@@ -5,8 +5,8 @@ class Config(object):
     OWNER_ID = "7657218453"
     sudo_users = ["7657218453", "7657218453"]
     GROUP_ID = "-1003087506512"
-    TOKEN = ""
-    mongo_url = ""
+    TOKEN = "8917618422:AAGy__Venc8MgzdspAp0M6fcfWkZzAnxnYk"
+    mongo_url = "mongodb+srv://babychan90132_db_user:kdGnIwXVvozkowt6@cluster0.owyjlla.mongodb.net/?appName=Cluster0"
     PHOTO_URL = ["https://files.catbox.moe/sgo9in.png", "https://files.catbox.moe/kgcrnb.jpeg"]
     SUPPORT_CHAT = "ANIME_GROUP_HAI"
     UPDATE_CHAT = "SAND_VILLAGE"
