@@ -8,7 +8,7 @@ START_VIDEO = "https://graph.org/file/e668451eba24048fe880c-8cefbbe834e0f673d8.m
 FORCE_SUB_CHAT = "anime_group_hai"
 
 MAIN_CAPTION = (
-    f"✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ {BOT_USERNAME}, ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
+    f"✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ ᴀʟʏᴀ ᴡᴀɪꜰᴜ ʙᴏᴛ ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
     f"ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ʟᴇᴛ ᴛʜᴇ ғᴜɴ ʙᴇɢɪɴ!"
 )
 MAIN_KEYBOARD = InlineKeyboardMarkup([
@@ -37,7 +37,7 @@ CATEGORIES = {
         ("/harem", "See your character's collection"),
         ("/gift", "Gift your waifu to someone 🎀"),
         ("/trade", "Trade characters between users"),
-        ("/tops", "View the leaderboard"),
+        ("/top", "View the leaderboard"),
         ("/sprofile", "View your profile"),
         ("/changetime", "Change the spawn time of characters [Owner/Admins]"),
     ]),
@@ -56,7 +56,7 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi")]
+CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi?profile")]
 
 
 async def is_force_sub_member(user_id, context: CallbackContext):
