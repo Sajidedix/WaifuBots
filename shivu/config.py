@@ -6,7 +6,7 @@ class Config(object):
     sudo_users = ["7657218453", "8679737897"]
     GROUP_ID = "-1003087506512"
     TOKEN = "8917618422:AAGy__Venc8MgzdspAp0M6fcfWkZzAnxnYk"
-    mongo_url = "mongodb+srv://alisawaifubot_db_user:jxVLyqL2QxfWSZ6Q@cluster0.hdzxkt6.mongodb.net/?appName=Cluster0"
+    mongo_url = "mongodb+srv://primarycroll_db_user:n9EHCzsmAf68MsY2@cluster0.ft576pm.mongodb.net/?appName=Cluster0"
     PHOTO_URL = ["https://files.catbox.moe/sgo9in.png", "https://files.catbox.moe/kgcrnb.jpeg"]
     SUPPORT_CHAT = "ANIME_GROUP_HAI"
     UPDATE_CHAT = "SAND_VILLAGE"
