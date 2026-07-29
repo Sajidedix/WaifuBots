@@ -56,7 +56,7 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi?profile")]
+CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi")]
 
 
 async def is_force_sub_member(user_id, context: CallbackContext):
@@ -108,7 +108,7 @@ async def credits_view(context: CallbackContext):
             LOGGER.error(f"Could not resolve {username}: {e}")
             url = f'https://t.me/{username.lstrip("@")}'
         kb.append([InlineKeyboardButton(name, url=url)])
-    kb.append([InlineKeyboardButton("BACK", callback_data='sxc_back')])
+    kb.append([InlineKeyboardButton("Back", callback_data='sxc_back')])
     return "𝗦𝘂𝗱𝗼:", InlineKeyboardMarkup(kb)
 
 
