@@ -112,13 +112,11 @@ def process_search(chars: List[Dict]) -> Dict:
 def card_caption(char: Char, gcount: int) -> str:
     emoji, text = rarity_parts(char.rarity)
     return (
-        "💠 𝗖𝗛𝗔𝗥𝗔𝗖𝗧𝗘𝗥 𝗜𝗡𝗙𝗢:\n"
-        "┏━━━━━━━━━━━━━⧫\n"
+        "💠 𝗖𝗛𝗔𝗥𝗔𝗖𝗧𝗘𝗥 𝗜𝗡𝗙𝗢\n\n"
         f"◈𝗡𝗔𝗠𝗘: {escape(char.name)}\n"
         f"◈𝗥𝗔𝗥𝗜𝗧𝗬: {emoji} {text}\n"
         f"◈𝗔𝗡𝗜𝗠𝗘: {escape(char.anime)}\n"
-        f"◈𝗣𝗥𝗜𝗖𝗘: {char.price:,}\n\n"
-        f"🌍 ɢʟᴏʙᴀʟʟʏ ɢʀᴀʙʙᴇᴅ {gcount}x\n\n"
+        f"🌍 ɢʟᴏʙᴀʟʟʏ ɢʀᴀʙʙᴇᴅ {gcount}x\n"
         "━━━━━━━━━━━━━━━━━\n"
         "ᴀ ᴘʀᴇᴄɪᴏᴜs ᴄʜᴀʀᴀᴄᴛᴇʀ ᴡᴀɪᴛɪɴɢ ᴛᴏ ᴊᴏɪɴ ʏᴏᴜʀ ᴄᴏʟʟᴇᴄᴛɪᴏɴ"
     )
@@ -129,7 +127,7 @@ def owners_caption(char: Char, owners: List[Dict], page: int, gcount: int) -> st
     start, end = page * USERS_PER_PAGE, page * USERS_PER_PAGE + USERS_PER_PAGE
     total_pages = (len(owners) + USERS_PER_PAGE - 1) // USERS_PER_PAGE
     lines = [
-        "🏆 𝗖𝗛𝗔𝗥𝗔𝗖𝗧𝗘𝗥 𝗢𝗪𝗡𝗘𝗥𝗦:",
+        "🏆 𝗖𝗛𝗔𝗥𝗔𝗖𝗧𝗘𝗥 𝗢𝗪𝗡𝗘𝗥𝗦",
         f"◈𝗡𝗔𝗠𝗘: {escape(char.name)}  {emoji} {text}",
         f"◈𝗔𝗡𝗜𝗠𝗘: {escape(char.anime)}",
         "━━━━━━━━━━━━━━━━━",
@@ -147,7 +145,7 @@ def owners_caption(char: Char, owners: List[Dict], page: int, gcount: int) -> st
 def find_caption(query: str, r: Dict, page: int, show_all: bool) -> Tuple[str, int]:
     total_pages = 1 if show_all else max(1, (r['unique'] + CHARS_PER_PAGE - 1) // CHARS_PER_PAGE)
     lines = [
-        "🔍 𝗦𝗘𝗔𝗥𝗖𝗛 𝗥𝗘𝗦𝗨𝗟𝗧𝗦:",
+        "🔍 𝗦𝗘𝗔𝗥𝗖𝗛 𝗥𝗘𝗦𝗨𝗟𝗧𝗦",
         f"◈ǫᴜᴇʀʏ: {escape(query)}  |  ᴛᴏᴛᴀʟ: {r['total']}  |  ᴜɴɪǫᴜᴇ: {r['unique']}",
         "━━━━━━━━━━━━━━━━━",
     ]
