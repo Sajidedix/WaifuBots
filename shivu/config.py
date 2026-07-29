@@ -6,14 +6,14 @@ class Config(object):
     SUDO_USERS = ["7657218453", "7657218453"]
     GROUP_ID = "-1003087506512"
     TOKEN = "8917618422:AAGy__Venc8MgzdspAp0M6fcfWkZzAnxnYk"
-    MONGO_URL = "mongodb+srv://babychan90132_db_user:kdGnIwXVvozkowt6@cluster0.owyjlla.mongodb.net/?appName=Cluster0"
+    mongo_url = "mongodb+srv://babychan90132_db_user:kdGnIwXVvozkowt6@cluster0.owyjlla.mongodb.net/?appName=Cluster0"
     PHOTO_URL = ["https://files.catbox.moe/sgo9in.png", "https://files.catbox.moe/kgcrnb.jpeg"]
     SUPPORT_CHAT = "ANIME_GROUP_HAI"
     UPDATE_CHAT = "SAND_VILLAGE"
     BOT_USERNAME = "AlyaWaifuBot"
     CHARA_CHANNEL_ID = "-1004425617417"
-    API_ID = "10658015"
-    API_HASH = "a0087bca748f86698c53d291c9e5b3af"
+    api_id = "10658015"
+    api_hash = "a0087bca748f86698c53d291c9e5b3af"
     
 class Production(Config):
     LOGGER = True
