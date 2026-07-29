@@ -11,7 +11,7 @@ class Config(object):
     SUPPORT_CHAT = "ANIME_GROUP_HAI"
     UPDATE_CHAT = "SAND_VILLAGE"
     BOT_USERNAME = "AlyaWaifuBot"
-    CHARA_CHANNEL_ID = "-1004310255455"
+    CHARA_CHANNEL_ID = "-1004425617417"
     api_id = "10658015"
     api_hash = "a0087bca748f86698c53d291c9e5b3af"
     
