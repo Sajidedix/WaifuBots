@@ -56,7 +56,7 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi")]
+CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "OWNER_ID")]
 
 
 async def is_force_sub_member(user_id, context: CallbackContext):
@@ -109,7 +109,7 @@ async def credits_view(context: CallbackContext):
             url = f'https://t.me/{username.lstrip("@")}'
         kb.append([InlineKeyboardButton(name, url=url)])
     kb.append([InlineKeyboardButton("Back", callback_data='sxc_back')])
-    return "𝗦𝘂𝗱𝗼:", InlineKeyboardMarkup(kb)
+    return "***Sudo:***", InlineKeyboardMarkup(kb)
 
 
 def _new_user_doc(user_id, first_name, username):
