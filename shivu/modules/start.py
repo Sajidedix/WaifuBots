@@ -2,27 +2,33 @@ import asyncio
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import BadRequest, Forbidden
 from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler
-from shivu import application, SUPPORT_CHAT, UPDATE_CHAT, BOT_USERNAME, LOGGER, user_collection
+from shivu import application, SUPPORT_CHAT, BOT_USERNAME, LOGGER, user_collection
 
-START_VIDEO = "https://graph.org/file/e668451eba24048fe880c-8cefbbe834e0f673d8.mp4"
+START_VIDEO = ""
+
 FORCE_SUB_CHAT = "anime_group_hai"
 
 MAIN_CAPTION = (
-    f"<b>✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ ᴀʟʏᴀ ᴡᴀɪꜰᴜ ʙᴏᴛ ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
-    f"ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ʟᴇᴛ ᴛʜᴇ ғᴜɴ ʙᴇɢɪɴ!</b>"
+    f"✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ Aaloo ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
+    f"ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ʟᴇᴛ ᴛʜᴇ ғᴜɴ ʙᴇɢɪɴ!"
 )
-MAIN_KEYBOARD = InlineKeyboardMarkup([
-    [InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url=f'https://t.me/{SUPPORT_CHAT}'),
-     InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url=f'https://t.me/{UPDATE_CHAT}')],
+MAIN_KEYBOARD = [
+    [
+        InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url=f'https://t.me/{SUPPORT_CHAT}'),
+        InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url='https://t.me/PICK_X_UPDATE')
+    ],
     [InlineKeyboardButton("sᴛᴀʀᴛ ɢᴜᴇssɪɴɢ💫", url=f'https://t.me/{BOT_USERNAME}?startgroup=new')],
-    [InlineKeyboardButton("ʜᴇʟᴘ", callback_data='sxc_help'),
-     InlineKeyboardButton("ᴄʀᴇᴅɪᴛs", callback_data='sxc_credits')]
-])
+    [
+        InlineKeyboardButton("ʜᴇʟᴘ", callback_data='sxc_help'),
+        InlineKeyboardButton("ᴄʀᴇᴅɪᴛs", callback_data='sxc_credits')
+    ]
+]
 
-FORCE_SUB_TEXT = "🔒 <b>ᴊᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴛʜɪs ʙᴏᴛ!</b>"
+FORCE_SUB_TEXT = "🔒 <b>Join our updates channel to use this bot!</b>"
+
 FORCE_SUB_KEYBOARD = InlineKeyboardMarkup([
-    [InlineKeyboardButton("ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=f'https://t.me/{FORCE_SUB_CHAT}')],
-    [InlineKeyboardButton("ᴛʀʏ ᴀɢᴀɪɴ", callback_data='sxc_checksub')]
+    [InlineKeyboardButton("Join Channel", url=f'https://t.me/{FORCE_SUB_CHAT}')],
+    [InlineKeyboardButton("Try Again", callback_data='sxc_checksub')]
 ])
 
 PAGE_SIZE = 6
@@ -37,11 +43,13 @@ CATEGORIES = {
         ("/harem", "See your character's collection"),
         ("/gift", "Gift your waifu to someone 🎀"),
         ("/trade", "Trade characters between users"),
-        ("/top", "View the leaderboard"),
+        ("/tops", "View the leaderboard"),
         ("/sprofile", "View your profile"),
         ("/changetime", "Change the spawn time of characters [Owner/Admins]"),
     ]),
     "interactive": ("Interactive Commands", [
+        ("/trade", "Trade characters with others"),
+        ("/gift", "Gift a character to someone"),
         ("/claim", "Claim your daily reward"),
         ("/roll", "Gamble your gold"),
         ("/refer", "Invite friends and earn rewards"),
@@ -56,16 +64,19 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [
-    ("ＩＭ 𖣘 ＵＣＨＩＨＡ", "iMSASUKESi", 7657218453),  # replace with real numeric id
-]
 
 async def is_force_sub_member(user_id, context: CallbackContext):
     try:
         member = await context.bot.get_chat_member(f"@{FORCE_SUB_CHAT}", user_id)
         return member.status not in ('left', 'kicked')
+    except Forbidden:
+        LOGGER.warning(f"Bot is not admin in @{FORCE_SUB_CHAT}")
+        return True
+    except BadRequest as e:
+        LOGGER.error(f"BadRequest checking force sub for {user_id}: {e}")
+        return True
     except Exception as e:
-        LOGGER.warning(f"Force-sub check failed for {user_id}: {e}")
+        LOGGER.error(f"Error checking force sub for {user_id}: {e}")
         return True
 
 
@@ -76,7 +87,7 @@ def menu_view():
         [InlineKeyboardButton("🌿 Sudo", callback_data='sxc_cat_sudo')],
         [InlineKeyboardButton("Main Menu", callback_data='sxc_back')]
     ]
-    return "<b>Help Menu</b>\n\n<b>sᴇʟᴇᴄᴛ ᴀ ᴄᴀᴛᴇɢᴏʀʏ ᴛᴏ ᴠɪᴇᴡ ᴄᴏᴍᴍᴀɴᴅs:</b>", InlineKeyboardMarkup(kb)
+    return "<b>Help Menu</b>\n\nSelect a category to view commands:", InlineKeyboardMarkup(kb)
 
 
 def category_view(cat_key: str, page: int = 1):
@@ -99,44 +110,41 @@ def category_view(cat_key: str, page: int = 1):
     return text, InlineKeyboardMarkup(kb)
 
 
+CREDITS_USERS = [
+    ("ＩＭ 𖣘 ＵＣＨＩＨＡ", "@iMSASUKESi"),
+]
+
+_credits_id_cache = {}
+
+
 async def credits_view(context: CallbackContext):
+    text = "SUDOS:"
     kb = []
+    row = []
     for name, username in CREDITS_USERS:
-        try:
-            user_id = (await context.bot.get_chat(username)).id
-            url = f'tg://user?id={user_id}'  # opens profile card, not DM
-        except (BadRequest, Forbidden) as e:
-            LOGGER.error(f"Could not resolve {username}: {e}")
-            url = f'https://t.me/{username.lstrip("@")}'
-        kb.append([InlineKeyboardButton(name, url=url)])
-    kb.append([InlineKeyboardButton("ʙᴀᴄᴋ", callback_data='sxc_back')])
-    return "<b>Sudo:</b>", InlineKeyboardMarkup(kb)
+        user_id = _credits_id_cache.get(username)
+        if user_id is None:
+            try:
+                chat = await context.bot.get_chat(username)
+                user_id = chat.id
+                _credits_id_cache[username] = user_id
+            except (BadRequest, Forbidden) as e:
+                LOGGER.error(f"Could not resolve {username}: {e}")
+                row.append(InlineKeyboardButton(name, url=f'https://t.me/{username.lstrip("@")}'))
+                if len(row) == 2:
+                    kb.append(row)
+                    row = []
+                continue
 
+        row.append(InlineKeyboardButton(name, url=f'tg://user?id={user_id}'))
+        if len(row) == 2:
+            kb.append(row)
+            row = []
 
-def _new_user_doc(user_id, first_name, username):
-    return {
-        "id": user_id, "first_name": first_name, "username": username,
-        "balance": 500, "characters": [],
-        "pass_data": {
-            "tier": "free", "weekly_claims": 0, "last_weekly_claim": None,
-            "streak_count": 0, "last_streak_claim": None,
-            "tasks": {"weekly_claims": 0, "grabs": 0},
-            "mythic_unlocked": False, "premium_expires": None,
-            "elite_expires": None, "pending_elite_payment": None
-        }
-    }
-
-
-async def _ensure_user(user_id, first_name, username):
-    """Returns True if this is a newly created user."""
-    user_data = await user_collection.find_one({"id": user_id})
-    if user_data:
-        await user_collection.update_one(
-            {"id": user_id}, {"$set": {"first_name": first_name, "username": username}}
-        )
-        return False
-    await user_collection.insert_one(_new_user_doc(user_id, first_name, username))
-    return True
+    if row:
+        kb.append(row)
+    kb.append([InlineKeyboardButton("BACK", callback_data='sxc_back')])
+    return text, InlineKeyboardMarkup(kb)
 
 
 async def safe_track_bot_start(user_id, first_name, username, is_new_user):
@@ -161,15 +169,39 @@ async def start(update: Update, context: CallbackContext):
         username = update.effective_user.username or ""
 
         if not await is_force_sub_member(user_id, context):
-            await update.message.reply_text(FORCE_SUB_TEXT, parse_mode='HTML', reply_markup=FORCE_SUB_KEYBOARD)
+            await update.message.reply_text(
+                FORCE_SUB_TEXT, parse_mode='HTML', reply_markup=FORCE_SUB_KEYBOARD
+            )
             return
 
-        is_new = await _ensure_user(user_id, first_name, username)
+        user_data = await user_collection.find_one({"id": user_id})
+        is_new = user_data is None
+
+        if is_new:
+            await user_collection.insert_one({
+                "id": user_id, "first_name": first_name, "username": username,
+                "balance": 500, "characters": [],
+                "pass_data": {
+                    "tier": "free", "weekly_claims": 0, "last_weekly_claim": None,
+                    "streak_count": 0, "last_streak_claim": None,
+                    "tasks": {"weekly_claims": 0, "grabs": 0},
+                    "mythic_unlocked": False, "premium_expires": None,
+                    "elite_expires": None, "pending_elite_payment": None
+                }
+            })
+        else:
+            await user_collection.update_one(
+                {"id": user_id}, {"$set": {"first_name": first_name, "username": username}}
+            )
+
         context.application.create_task(safe_track_bot_start(user_id, first_name, username, is_new))
 
         await update.message.reply_video(
-            video=START_VIDEO, caption=MAIN_CAPTION, reply_markup=MAIN_KEYBOARD,
-            parse_mode='HTML', supports_streaming=True
+            video=START_VIDEO,
+            caption=MAIN_CAPTION,
+            reply_markup=InlineKeyboardMarkup(MAIN_KEYBOARD),
+            parse_mode='HTML',
+            supports_streaming=True
         )
 
     except Exception as e:
@@ -190,28 +222,44 @@ async def button_callback(update: Update, context: CallbackContext):
 
     try:
         data = query.data
-        user_id = query.from_user.id
 
         if data == 'sxc_checksub':
-            if not await is_force_sub_member(user_id, context):
-                await query.answer("<b>⚠️ ʏᴏᴜ ʜᴀᴠᴇɴ'ᴛ ᴊᴏɪɴᴇᴅ ʏᴇᴛ!</b>", show_alert=True)
+            if not await is_force_sub_member(query.from_user.id, context):
+                await query.answer("⚠️ You haven't joined yet!", show_alert=True)
                 return
             first_name = query.from_user.first_name or "User"
             username = query.from_user.username or ""
-            await _ensure_user(user_id, first_name, username)
+            user_data = await user_collection.find_one({"id": query.from_user.id})
+            if not user_data:
+                await user_collection.insert_one({
+                    "id": query.from_user.id, "first_name": first_name, "username": username,
+                    "balance": 500, "characters": [],
+                    "pass_data": {
+                        "tier": "free", "weekly_claims": 0, "last_weekly_claim": None,
+                        "streak_count": 0, "last_streak_claim": None,
+                        "tasks": {"weekly_claims": 0, "grabs": 0},
+                        "mythic_unlocked": False, "premium_expires": None,
+                        "elite_expires": None, "pending_elite_payment": None
+                    }
+                })
             await query.message.delete()
             await context.bot.send_video(
-                chat_id=user_id, video=START_VIDEO, caption=MAIN_CAPTION,
-                reply_markup=MAIN_KEYBOARD, parse_mode='HTML', supports_streaming=True
+                chat_id=query.from_user.id,
+                video=START_VIDEO,
+                caption=MAIN_CAPTION,
+                reply_markup=InlineKeyboardMarkup(MAIN_KEYBOARD),
+                parse_mode='HTML',
+                supports_streaming=True
             )
             return
 
-        if not await is_force_sub_member(user_id, context):
-            await query.answer("<b>⚠️ ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ ꜰɪʀsᴛ!</b>", show_alert=True)
+        if not await is_force_sub_member(query.from_user.id, context):
+            await query.answer("⚠️ Join our channel first!", show_alert=True)
             return
 
-        if not await user_collection.find_one({"id": user_id}):
-            await query.answer("<b>⚠️ sᴛᴀʀᴛ ʙᴏᴛ ғɪʀsᴛ</b>", show_alert=True)
+        user_data = await user_collection.find_one({"id": query.from_user.id})
+        if not user_data:
+            await query.answer("⚠️ sᴛᴀʀᴛ ʙᴏᴛ ғɪʀsᴛ", show_alert=True)
             return
 
         if data == 'sxc_credits':
@@ -231,7 +279,7 @@ async def button_callback(update: Update, context: CallbackContext):
                 return
             text, markup = category_view(cat_key, int(page_str))
         elif data == 'sxc_back':
-            text, markup = MAIN_CAPTION, MAIN_KEYBOARD
+            text, markup = MAIN_CAPTION, InlineKeyboardMarkup(MAIN_KEYBOARD)
         else:
             return
 
