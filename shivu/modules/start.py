@@ -56,7 +56,8 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [InlineKeyboardButton("ＩＭ 𖣘︎ ＵＣＨＩＨＡ", url=f'https://t.me/{OWNER_ID}')]
+CREDITS_USERS = InlineKeyboardMarkup([
+    [InlineKeyboardButton("ＩＭ 𖣘︎ ＵＣＨＩＨＡ", url=f'https://t.me/{OWNER_ID}')]
 
 ])
 
