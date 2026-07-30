@@ -8,8 +8,8 @@ START_VIDEO = "https://graph.org/file/e668451eba24048fe880c-8cefbbe834e0f673d8.m
 FORCE_SUB_CHAT = "anime_group_hai"
 
 MAIN_CAPTION = (
-    f"✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ ᴀʟʏᴀ ᴡᴀɪꜰᴜ ʙᴏᴛ ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
-    f"ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ʟᴇᴛ ᴛʜᴇ ғᴜɴ ʙᴇɢɪɴ!"
+    f"<b>✨ ʜᴇʏ ᴛʜᴇʀᴇ! ɪ'ᴍ ᴀʟʏᴀ ᴡᴀɪꜰᴜ ʙᴏᴛ ʏᴏᴜʀ ᴜʟᴛɪᴍᴀᴛᴇ ᴀɴɪᴍᴇ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴄᴏᴍᴘᴀɴɪᴏɴ. "
+    f"ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ʟᴇᴛ ᴛʜᴇ ғᴜɴ ʙᴇɢɪɴ!</b>"
 )
 MAIN_KEYBOARD = InlineKeyboardMarkup([
     [InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url=f'https://t.me/{SUPPORT_CHAT}'),
@@ -19,10 +19,10 @@ MAIN_KEYBOARD = InlineKeyboardMarkup([
      InlineKeyboardButton("ᴄʀᴇᴅɪᴛs", callback_data='sxc_credits')]
 ])
 
-FORCE_SUB_TEXT = "🔒 <b>Join our updates channel to use this bot!</b>"
+FORCE_SUB_TEXT = "🔒 <b>ᴊᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴛʜɪs ʙᴏᴛ!</b>"
 FORCE_SUB_KEYBOARD = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Join Channel", url=f'https://t.me/{FORCE_SUB_CHAT}')],
-    [InlineKeyboardButton("Try Again", callback_data='sxc_checksub')]
+    [InlineKeyboardButton("ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=f'https://t.me/{FORCE_SUB_CHAT}')],
+    [InlineKeyboardButton("ᴛʀʏ ᴀɢᴀɪɴ", callback_data='sxc_checksub')]
 ])
 
 PAGE_SIZE = 6
@@ -75,7 +75,7 @@ def menu_view():
         [InlineKeyboardButton("🌿 Sudo", callback_data='sxc_cat_sudo')],
         [InlineKeyboardButton("Main Menu", callback_data='sxc_back')]
     ]
-    return "<b>Help Menu</b>\n\nSelect a category to view commands:", InlineKeyboardMarkup(kb)
+    return "<b>Help Menu</b>\n\n<b>sᴇʟᴇᴄᴛ ᴀ ᴄᴀᴛᴇɢᴏʀʏ ᴛᴏ ᴠɪᴇᴡ ᴄᴏᴍᴍᴀɴᴅs:</b>", InlineKeyboardMarkup(kb)
 
 
 def category_view(cat_key: str, page: int = 1):
@@ -108,7 +108,7 @@ async def credits_view(context: CallbackContext):
             LOGGER.error(f"Could not resolve {username}: {e}")
             url = f'https://t.me/{username.lstrip("@")}'
         kb.append([InlineKeyboardButton(name, url=url)])
-    kb.append([InlineKeyboardButton("Back", callback_data='sxc_back')])
+    kb.append([InlineKeyboardButton("ʙᴀᴄᴋ", callback_data='sxc_back')])
     return "<b>Sudo:</b>", InlineKeyboardMarkup(kb)
 
 
@@ -193,7 +193,7 @@ async def button_callback(update: Update, context: CallbackContext):
 
         if data == 'sxc_checksub':
             if not await is_force_sub_member(user_id, context):
-                await query.answer("⚠️ You haven't joined yet!", show_alert=True)
+                await query.answer("<b>⚠️ ʏᴏᴜ ʜᴀᴠᴇɴ'ᴛ ᴊᴏɪɴᴇᴅ ʏᴇᴛ!</b>", show_alert=True)
                 return
             first_name = query.from_user.first_name or "User"
             username = query.from_user.username or ""
@@ -206,11 +206,11 @@ async def button_callback(update: Update, context: CallbackContext):
             return
 
         if not await is_force_sub_member(user_id, context):
-            await query.answer("⚠️ Join our channel first!", show_alert=True)
+            await query.answer("<b>⚠️ ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ ꜰɪʀsᴛ!</b>", show_alert=True)
             return
 
         if not await user_collection.find_one({"id": user_id}):
-            await query.answer("⚠️ sᴛᴀʀᴛ ʙᴏᴛ ғɪʀsᴛ", show_alert=True)
+            await query.answer("<b>⚠️ sᴛᴀʀᴛ ʙᴏᴛ ғɪʀsᴛ</b>", show_alert=True)
             return
 
         if data == 'sxc_credits':
