@@ -56,8 +56,9 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "iMSASUKESi")]
+CREDITS_USERS = [InlineKeyboardButton("ＩＭ 𖣘︎ ＵＣＨＩＨＡ", url=f'https://t.me/{OWNER_ID}')]
 
+])
 
 async def is_force_sub_member(user_id, context: CallbackContext):
     try:
