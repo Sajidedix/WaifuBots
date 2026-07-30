@@ -56,7 +56,7 @@ CATEGORIES = {
     ]),
 }
 
-CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "iMSASUKESi?profile")]
+CREDITS_USERS = [("ＩＭ 𖣘 ＵＣＨＩＨＡ", "iMSASUKESi")]
 
 
 async def is_force_sub_member(user_id, context: CallbackContext):
